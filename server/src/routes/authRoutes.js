@@ -1,0 +1,12 @@
+const router = require('express').Router();
+const auth = require('../middleware/auth');
+const upload = require('../middleware/upload');
+const c = require('../controllers/authController');
+const { registerRules, loginRules } = require('../validators/authValidators');
+router.post('/register', registerRules, c.register);
+router.post('/login', loginRules, c.login);
+router.get('/me', auth, c.me);
+router.put('/me', auth, c.updateMe);
+router.put('/me/avatar', auth, upload.single('avatar'), c.uploadAvatar);
+router.put('/me/password', auth, c.changePassword);
+module.exports = router;
